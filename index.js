@@ -44,7 +44,7 @@ controls.dampingFactor=0.2
 function init(geometry) {
   const material = new THREE.MeshMatcapMaterial({
     // color: 0x00ff00,
-    // flatShading:true ,
+    flatShading:false ,
     matcap: new THREE.TextureLoader().load('./assets/textures/matcaps/silver2.jpg'),
     // transparent: true,
     // opacity: 0.5
@@ -53,7 +53,7 @@ function init(geometry) {
   if (model==0) {
     mesh.scale.setScalar(30)
   } else {
-    mesh.scale.setScalar(0.05) 
+    mesh.scale.setScalar(0.03) 
   }
   mesh.rotation.x=-45
   mesh.geometry.center()
@@ -101,7 +101,7 @@ const loader = new OBJLoader();
 if(model==0){
   loader.load("./assets/models/bunny2.obj", (obj) => init(obj.children[0].geometry));
 }else{
-  loader.load("./assets/models/tiger.obj", (obj) => init(obj.children[0].geometry));
+  loader.load("./assets/models/Pikachu_V2.obj", (obj) => init(obj.children[0].geometry));
 }
 function handleWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
