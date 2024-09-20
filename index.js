@@ -4,6 +4,26 @@ import { OBJLoader } from "jsm/loaders/OBJLoader.js";
 // import getLayer from './getLayer.js';
 // import getStarfield from "./getStarField.js";
 
+let reloadCount
+let model
+try {
+  // Reload counter logic
+  reloadCount = localStorage.getItem("reloadCount") ? parseInt(localStorage.getItem("reloadCount")) : 0;
+  reloadCount += 1;
+  localStorage.setItem("reloadCount", reloadCount);
+} catch (e) {
+  console.error("localStorage error: ", e);
+}
+
+
+if(reloadCount){
+  model = reloadCount%2
+}else{
+  model =0
+}
+console.log(model);
+
+
 const w = window.innerWidth;
 const h = window.innerHeight;
 const scene = new THREE.Scene();
@@ -30,10 +50,21 @@ function init(geometry) {
     // opacity: 0.5
   });
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.scale.setScalar(30)
+  if (model==0) {
+    mesh.scale.setScalar(30)
+  } else {
+    mesh.scale.setScalar(0.2) 
+  }
   mesh.rotation.x=-45
   mesh.geometry.center()
-  mesh.rotation.x = Math.PI / 10;
+  if(model==0){
+    mesh.rotation.x = Math.PI / 10;
+  }else{
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.rotation.z = -Math.PI / 2;
+
+  }
+
   scene.add(mesh);
 
   const sunlight = new THREE.DirectionalLight(0xffffff,2);
@@ -60,15 +91,18 @@ function init(geometry) {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
-    console.log(mesh.rotation.x)
 
   }
   animate();
 }
 
 const loader = new OBJLoader();
-loader.load("./assets/models/bunny2.obj", (obj) => init(obj.children[0].geometry));
 
+if(model==0){
+  loader.load("./assets/models/bunny2.obj", (obj) => init(obj.children[0].geometry));
+}else{
+  loader.load("./assets/models/tigerl.obj", (obj) => init(obj.children[0].geometry));
+}
 function handleWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
