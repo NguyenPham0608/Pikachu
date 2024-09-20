@@ -16,22 +16,24 @@ document.body.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping=true
-controls.dampFactor=0.03
+controls.dampingFactor=0.2
 
 // const stars = getStarfield({numStars: 1000});
 // scene.add(stars);
 
 function init(geometry) {
   const material = new THREE.MeshMatcapMaterial({
-    color: 0xffff00,
-    matcap: new THREE.TextureLoader().load('./assets/textures/matcaps/silver.jpg'),
+    // color: 0x00ff00,
+    // flatShading:true ,
+    matcap: new THREE.TextureLoader().load('./assets/textures/matcaps/silver2.jpg'),
     // transparent: true,
     // opacity: 0.5
   });
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.scale.setScalar(0.03)
+  mesh.scale.setScalar(30)
   mesh.rotation.x=-45
   mesh.geometry.center()
+  mesh.rotation.x = Math.PI / 10;
   scene.add(mesh);
 
   const sunlight = new THREE.DirectionalLight(0xffffff,2);
@@ -58,13 +60,14 @@ function init(geometry) {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
+    console.log(mesh.rotation.x)
 
   }
   animate();
 }
 
 const loader = new OBJLoader();
-loader.load("./assets/models/bunny.obj", (obj) => init(obj.children[0].geometry));
+loader.load("./assets/models/bunny2.obj", (obj) => init(obj.children[0].geometry));
 
 function handleWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
