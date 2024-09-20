@@ -29,7 +29,7 @@ function init(geometry) {
     // opacity: 0.5
   });
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.scale.setScalar(0.04)
+  mesh.scale.setScalar(1)
   mesh.rotation.x=-45
   scene.add(mesh);
 
@@ -63,7 +63,7 @@ function init(geometry) {
 }
 
 const loader = new OBJLoader();
-loader.load("./assets/models/Pikachu.obj", (obj) => init(obj.children[0].geometry));
+loader.load("./assets/models/A_10.obj", (obj) => init(obj.children[0].geometry));
 
 function handleWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
