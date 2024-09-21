@@ -15,7 +15,7 @@ try {
   console.error("localStorage error: ", e);
 }
 
-let randomTexture=getRandomInt(1,5)
+let randomTexture=getRandomInt(1,4)
 console.log(randomTexture)
 
 if(reloadCount){
