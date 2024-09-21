@@ -33,9 +33,6 @@ switch(randomTexture){
     matcapTexture=new THREE.TextureLoader().load('./assets/textures/matcaps/silver.jpg')
     break
   case 3:
-    matcapTexture=new THREE.TextureLoader().load('./assets/textures/matcaps/glass.jpg')
-    break
-  case 4:
     matcapTexture=new THREE.TextureLoader().load('./assets/textures/matcaps/pearl.jpg')
     break
 }
