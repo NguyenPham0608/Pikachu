@@ -15,13 +15,31 @@ try {
   console.error("localStorage error: ", e);
 }
 
+let randomTexture=getRandomInt(1,5)
+console.log(randomTexture)
 
 if(reloadCount){
-  model = reloadCount%2
+  model = reloadCount%3
 }else{
   model =0
 }
-console.log(model);
+
+let matcapTexture=undefined
+switch(randomTexture){
+  case 1:
+    matcapTexture=new THREE.TextureLoader().load('./assets/textures/matcaps/silver2.jpg')
+    break
+  case 2:
+    matcapTexture=new THREE.TextureLoader().load('./assets/textures/matcaps/silver.jpg')
+    break
+  case 3:
+    matcapTexture=new THREE.TextureLoader().load('./assets/textures/matcaps/glass.jpg')
+    break
+  case 4:
+    matcapTexture=new THREE.TextureLoader().load('./assets/textures/matcaps/pearl.jpg')
+    break
+}
+
 
 
 const w = window.innerWidth;
@@ -45,25 +63,30 @@ function init(geometry) {
   const material = new THREE.MeshMatcapMaterial({
     // color: 0x00ff00,
     flatShading:false ,
-    matcap: new THREE.TextureLoader().load('./assets/textures/matcaps/silver2.jpg'),
+    matcap: matcapTexture,
     // transparent: true,
     // opacity: 0.5
   });
   const mesh = new THREE.Mesh(geometry, material);
-  if (model==0) {
-    mesh.scale.setScalar(30)
-  } else {
-    mesh.scale.setScalar(0.03) 
-  }
-  mesh.rotation.x=-45
-  mesh.geometry.center()
-  if(model==0){
-    mesh.rotation.x = Math.PI / 10;
-  }else{
-    mesh.rotation.x = -Math.PI / 2;
-    mesh.rotation.z = -Math.PI / 2;
 
+  switch(model){
+    case 0:
+      mesh.scale.setScalar(30)
+      mesh.rotation.x = Math.PI / 10;
+      break
+    case 1:
+      mesh.scale.setScalar(0.03) 
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.rotation.z = -Math.PI / 2;
+      break
+    case 2:
+      mesh.scale.setScalar(0.05) 
+      mesh.rotation.x = -Math.PI / 2;
+
+      break
   }
+  mesh.geometry.center()
+
 
   scene.add(mesh);
 
@@ -98,10 +121,21 @@ function init(geometry) {
 
 const loader = new OBJLoader();
 
+switch(model){
+  case 0:
+    loader.load("./assets/models/bunny2.obj", (obj) => init(obj.children[0].geometry));
+    break
+  case 1:
+    loader.load("./assets/models/Pikachu_V2.obj", (obj) => init(obj.children[0].geometry));
+    break
+  case 2:
+    loader.load("./assets/models/turtle.obj", (obj) => init(obj.children[0].geometry));
+    break
+}
+
 if(model==0){
-  loader.load("./assets/models/bunny2.obj", (obj) => init(obj.children[0].geometry));
 }else{
-  loader.load("./assets/models/Pikachu_V2.obj", (obj) => init(obj.children[0].geometry));
+  if(model==1){}
 }
 function handleWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
