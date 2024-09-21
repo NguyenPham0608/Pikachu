@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from 'jsm/controls/OrbitControls.js';
 import { OBJLoader } from "jsm/loaders/OBJLoader.js";
 // import getLayer from './getLayer.js';
-import getStarfield from "./getStarField.js";
+// import getStarfield from "./getStarField.js";
 
 let reloadCount
 let model
@@ -56,8 +56,8 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping=true
 controls.dampingFactor=0.2
 
-const stars = getStarfield({numStars: 1000});
-scene.add(stars);
+// const stars = getStarfield({numStars: 1000});
+// scene.add(stars);
 
 function init(geometry) {
   const material = new THREE.MeshMatcapMaterial({
